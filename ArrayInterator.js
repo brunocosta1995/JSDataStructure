@@ -14,7 +14,7 @@ const showData = () => {
 };
 console.log(showData());
 /*-------------------------------------------------------------------------------------------------------------*/
-//filter
+//filter - retorna um array
 // Filtrar números pares de um array:
 const numbers = [1, 2, 3, 4, 5, 6];
 const evenNumbers = numbers.filter((num) => num % 2 === 0);
@@ -102,8 +102,99 @@ const findStudent = dataStudents.find((student) =>
 );
 console.log(findStudent); // Saída: { name: 'Alice', courses: ['Physics', 'Mathematics', 'Chemistry'] }
 
-/*reduce
+/*---------------------------------------------------------------------------*/
+/*reduce - utilizada para iterar sobre um array e acumular um resultado final.
+array.reduce(callback(acumulador, valorAtual, índice, array), valorInicial);*/
+
+//soma
+const numeros = [1, 2, 3, 4, 5];
+const soma = numeros.reduce((acumulador, valorAtual) => {
+  return acumulador + valorAtual;
+}, 0);
+console.log(soma); // Saída: 15
+
+//Encontrando o valor máximo em um array
+const arNum = [1, 2, 3, 4, 5];
+
+const maximo = arNum.reduce((acumulador, valorAtual) => {
+  return Math.max(acumulador, valorAtual);
+}, -Infinity);
+console.log(maximo); // Saída: 5
+
+// Contando a ocorrência de elementos em um array
+const frutas = ['banana', 'maçã', 'laranja', 'maçã', 'banana', 'maçã'];
+
+const contagemFrutas = frutas.reduce((acumulador, fruta) => {
+  if (acumulador[fruta]) {
+    acumulador[fruta]++;
+  } else {
+    acumulador[fruta] = 1;
+  }
+  return acumulador;
+}, {});
+
+console.log(contagemFrutas); // Saída: { banana: 2, maçã: 3, laranja: 1 }
+
+//Agrupando objetos por uma propriedade
+const pessoas = [
+  { nome: 'Alice', idade: 21 },
+  { nome: 'Bob', idade: 25 },
+  { nome: 'Carlos', idade: 21 },
+  { nome: 'Daniela', idade: 25 },
+];
+
+const agrupadoPorIdade = pessoas.reduce((acumulador, pessoa) => {
+  const idade = pessoa.idade;
+  if (!acumulador[idade]) {
+    acumulador[idade] = [];
+  }
+  acumulador[idade].push(pessoa);
+  return acumulador;
+}, {});
+
+console.log(agrupadoPorIdade);
+// Saída: 
+// {
+//   '21': [ { nome: 'Alice', idade: 21 }, { nome: 'Carlos', idade: 21 } ],
+//   '25': [ { nome: 'Bob', idade: 25 }, { nome: 'Daniela', idade: 25 } ]
+// }
+
+/*---------------------------------------------------------------------------*/
+/*findIndex - usada para encontrar o índice do primeiro elemento em um array que satisfaz uma função de teste fornecida
+array.findIndex(callback(element[, index[, array]])[, thisArg])*/
+
+//Encontrar o índice de um número em um array
+const numb = [4, 9, 16, 25, 29];
+const index = numb.findIndex((num) => num > 10);
+console.log(index); // Saída: 2
+
+//Encontrar o índice de um objeto em um array de objetos
+const people = [
+  { name: "Alice", age: 25 },
+  { name: "Bob", age: 30 },
+  { name: "Charlie", age: 35 },
+  { name: "David", age: 40 }
+];
+const ind = people.findIndex((person) => person.age > 30);
+console.log(ind); // Saída: 2
+
+//Uso com thisArg
+const arNumb = [10, 20, 30, 40];
+const obj = {
+  threshold: 25,
+  isAboveThreshold: function(element) {
+    return element > this.threshold;
+  }
+};
+const findInd = arNumb.findIndex(function(element) {
+  return this.isAboveThreshold(element);
+}, obj);
+console.log(findInd); // Saída: 2
+/*---------------------------------------------------------------------------*/
+
+
+/*
 some
 every
-findIndex
+
 forEach*/
